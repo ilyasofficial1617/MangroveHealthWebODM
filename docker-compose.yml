@@ -1,0 +1,29 @@
+version: "2.1"
+services:
+  mangrovehealthwebodm:
+    # custom image
+    image: ilyasofficial1617/mangrovehealthwebodm
+    container_name: mangrovehealthwebodm
+    # Dockerfile
+    build:
+      context: .
+    # set container's used directory
+    working_dir: /mangrovehealthwebodm
+    # start command when starting container
+    entrypoint: /bin/bash -c "chmod +x *.sh && ./run_inside.sh"
+    # restart everytime the computer up
+    restart: unless-stopped
+    # uses current directory volume mount
+    # file changes are reflected
+    volumes: 
+      - ./:/mangrovehealthwebodm
+    # uses webodm network to communicate
+    networks:
+      - webodm_default
+    # public port : container port
+    ports:
+      - "1300:5001"
+    
+networks:
+  webodm_default:
+    external: true
